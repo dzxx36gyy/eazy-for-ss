@@ -69,9 +69,9 @@ fi
 function pre_install(){
 #base-tool
 apt-get update
-echo linux-image-`uname -r` hold | sudo dpkg --set-selections
+echo linux-image-`uname -r` hold | dpkg --set-selections
 apt-get upgrade -y
-echo linux-image-`uname -r` install | sudo dpkg --set-selections
+echo linux-image-`uname -r` install | dpkg --set-selections
 apt-get install -y -qq sudo nano sed vim gawk curl dnsutils apt-transport-https net-tools
 #tcp choice
 #load hybla
@@ -143,7 +143,7 @@ if [ $? -ne 0 ]; then
         echo "deb http://shadowsocks.org/debian wheezy main" >> /etc/apt/sources.list
     fi
 #add gpg
-    wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo apt-key add -
+    wget -O- http://shadowsocks.org/debian/1D27208A.gpg | apt-key add -
 fi
 clear
 }
@@ -260,15 +260,17 @@ fi
 ps -ef|grep -v grep|grep -v ps|grep -i 'ss-server' > /dev/null 2>&1
 if [ $? -eq 0 ]; then 
     clear
-    echo ""
-    echo "Congratulations!Shadowsocks-libev start success!"
-    echo -e "Your Server IP: \033[41;37m ${IP} \033[0m"
-    echo -e "Your Server Port: \033[41;37m ${shadowsockspt} \033[0m"
-    echo -e "Your Password: \033[41;37m ${shadowsockspwd} \033[0m"
-    echo -e "Your Encryption Method: \033[41;37m ${shadowsocksem} \033[0m"
-    echo ""
+    echo 
+    echo "Congratulations!"
+    echo "Shadowsocks-libev start success!"
+    echo
+    echo -e "Your Server IP:\t\t\033[41;37m ${IP} \033[0m"
+    echo -e "Your Server Port:\t\033[41;37m ${shadowsockspt} \033[0m"
+    echo -e "Your Password:\t\t\033[41;37m ${shadowsockspwd} \033[0m"
+    echo -e "Your Encryption Method:\t\033[41;37m ${shadowsocksem} \033[0m"
+    echo 
     echo "Enjoy it!"
-    echo ""
+    echo 
     exit
 else
     echo "Shadowsocks-libev start failure!"

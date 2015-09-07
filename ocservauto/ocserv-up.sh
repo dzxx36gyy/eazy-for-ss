@@ -8,14 +8,15 @@ OCSERV_CONFIG="/etc/ocserv/ocserv.conf"
 sysctl -w net.ipv4.ip_forward=1 > /dev/null 2>&1
 
 #get gateway and profiles
-gw_intf_oc=`ip route show|sed -n 's/^default.* dev \([^ ]*\).*/\1/p'`
+gw_intf_oc=`ip route show 0/0 | sort -k 7 | head -n 1 | sed -n 's/^default.* dev \([^ ]*\).*/\1/p'`
 ocserv_tcpport=`sed -n 's/^tcp-.*=[ \t]*//p' $OCSERV_CONFIG`
 ocserv_udpport=`sed -n 's/^udp-.*=[ \t]*//p' $OCSERV_CONFIG`
 ocserv_ip4_work_mask=`sed -n 's/^ipv4-.*=[ \t]*//p' $OCSERV_CONFIG|sed 'N;s|\n|/|g'`
 
 # turn on NAT over default gateway and VPN
 if !(iptables-save -t nat | grep -q "$gw_intf_oc (ocserv)"); then
-iptables -t nat -A POSTROUTING -s $ocserv_ip4_work_mask -o $gw_intf_oc -m comment --comment "$gw_intf_oc (ocserv)" -j MASQUERADE
+#iptables -t nat -A POSTROUTING -s $ocserv_ip4_work_mask -o $gw_intf_oc -m comment --comment "$gw_intf_oc (ocserv)" -j MASQUERADE
+iptables -t nat -A POSTROUTING -m comment --comment "$gw_intf_oc (ocserv)" -j MASQUERADE
 fi
 
 if !(iptables-save -t filter | grep -q "$gw_intf_oc (ocserv2)"); then

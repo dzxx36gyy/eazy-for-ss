@@ -168,3 +168,35 @@ function check_install {
             fi
         done
 } 
+#ls|color_line;ls|color_turn
+color_turn(){
+    echo
+    while read line
+    do
+        echo -e "\e[1;33m$line"
+        echo
+        read line
+        echo -e "\e[1;32m$line"
+        echo
+    done
+    echo -en "\e[0m"
+}
+color_line(){
+    echo
+    while read line
+    do
+        echo -e "\e[1;33m$line"
+        echo
+    done
+    echo -en "\e[0m"
+}
+function Ip_Check(){
+    local IP_TMP="$1"
+    if ( echo "$IP_TMP"|egrep -q \
+    '^((2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)\.){3}(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-9]?)$' )
+    then
+        return 0
+    else
+        return 1
+    fi
+}

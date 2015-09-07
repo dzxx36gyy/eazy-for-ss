@@ -20,10 +20,13 @@ config-per-group = /etc/ocserv/config-per-group
 修改或者创建组用户，下面的username是自定义的用户名
 
 ```shell
-ocpasswd -c /etc/ocserv/ocpasswd  -g "Route，All" username
+ocpasswd -c /etc/ocserv/ocpasswd  -g "Route,All" username
 ```
+如果您使用是该脚本进行安装，进行到此步骤即可重启服务器了。下面的文件夹和文件都已被脚本自动创建了。
 
-然后，创建放置分流组配置文件的文件夹
+如果没有相关文件和文件夹，请根据说明继续进行操作。
+
+创建放置分流组配置文件的文件夹
 
 ```shell
 mkdir /etc/ocserv/config-per-group
@@ -34,7 +37,7 @@ mkdir /etc/ocserv/config-per-group
 我们可以参考来自 https://github.com/humiaozuzu/ocserv-build 的一份优化好的路由表来完成分流，可以通过下面命令来配置
 
 ```shell
-wget https://raw.githubusercontent.com/fanyueciyuan/eazy-for-ss/master/ocservauto/routerulers -O /etc/ocserv/config-per-group/Route
+wget https://raw.githubusercontent.com/fanyueciyuan/eazy-for-ss/master/ocservauto/Route -O /etc/ocserv/config-per-group/Route
 ```
 
 然后创建一个空的All文件
